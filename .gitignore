@@ -5,6 +5,7 @@
 *.so
 *.dylib
 *.xml
+*.xlsx
 
 # Test binary, built with `go test -c`
 *.test
