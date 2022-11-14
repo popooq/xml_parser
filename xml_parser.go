@@ -4,12 +4,11 @@ import (
 	"bufio"
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"sort"
 	"strings"
-	"time"
 )
 
 type ContinentLogs struct {
@@ -61,11 +60,6 @@ type Record struct {
 
 type RecordList []Record
 
-func metricTime(start time.Time) {
-	// функция Now() возвращает текущее время, а функция Sub возвращает разницу между двумя временными метками
-	fmt.Println(time.Since(start))
-}
-
 func (e RecordList) Len() int {
 	return len(e)
 }
@@ -82,7 +76,6 @@ func (e RecordList) Swap(i, j int) {
 }
 
 func main() {
-	defer metricTime(time.Now())
 	var path string
 	in := bufio.NewReader(os.Stdin)
 	fmt.Fscan(in, &path)
@@ -95,7 +88,7 @@ func main() {
 	}
 	defer xmlFile.Close()
 
-	byteValue, _ := ioutil.ReadAll(xmlFile)
+	byteValue, _ := io.ReadAll(xmlFile)
 
 	var Log ContinentLogs
 	Kok := AccessServerLog{}
@@ -130,7 +123,7 @@ func main() {
 	}
 	fmt.Println("Лог сохранен в", pathwd)
 
-	/**	fmt.Println("Press 'q' to quit")
+	fmt.Println("Press 'q' to quit")
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		exit := scanner.Text()
@@ -139,5 +132,5 @@ func main() {
 		} else {
 			fmt.Println("Press 'q' to quit")
 		}
-	} **/
+	}
 }
